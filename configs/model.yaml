@@ -1,0 +1,95 @@
+model:
+  device: cuda
+
+  flow_matching:
+    sigma_min: 1e-4
+    exponent: 2.0
+    estimator:
+      hidden_dim: 768
+      spk_dim: 256
+      num_layers: 12
+      num_heads: 12
+      ff_mult: 4
+
+  pcm:
+    hidden_dim: 768
+
+    variance_adaptor:
+      encoder_hidden: 256
+      filter_size: 1024
+      kernel_size: 3
+      drop_out: 0.5
+
+    text_encoder:
+      transformer:
+        encoder_layer: 2
+        encoder_head: 4
+        encoder_hidden: 256
+        encoder_conv_filter_size: 1024
+        conv_kernel_size: [9, 1]
+        encoder_dropout: 0.2
+        max_seq_len: 5000
+
+    decoder:
+      transformer:
+        decoder_layer: 2
+        decoder_head: 4
+        decoder_hidden: 256
+        decoder_conv_filter_size: 1024
+        conv_kernel_size: [9, 1]
+        decoder_dropout: 0.2
+      max_seq_len: 5000
+
+  codec_model:
+    n_quantizers: 6
+    vocab_size: 1024
+
+    encoder:
+      ngf: 32
+      up_ratios: [2, 4, 5, 5]
+      out_channels: 256
+      ckpt_filename: ns3_facodec_encoder.bin
+
+    decoder:
+      in_channels: 256
+      upsample_initial_channel: 1024
+      ngf: 32
+      up_ratios: [5, 5, 4, 2]
+      vq_num_q_c: 2
+      vq_num_q_p: 1
+      vq_num_q_r: 3
+      vq_dim: 256
+      codebook_dim: 8
+      codebook_size_prosody: 10
+      codebook_size_content: 10
+      codebook_size_residual: 10
+      use_gr_x_timbre: true
+      use_gr_residual_f0: true
+      use_gr_residual_phone: true
+      ckpt_filename: ns3_facodec_decoder.bin
+ 
+optim:
+  lr: 1e-4
+  betas: [0.9, 0.999]
+  eps: 1e-8
+  weight_decay: 0.01
+  num_training_steps: 1000000
+  num_warmup_steps: 200000
+ 
+dataset:
+  train:
+    metadata_path: /path/to/libritts-train-facodec-metadata.json
+    codes_path: /path/to/libritts-train-facodec-codes
+  val:
+    metadata_path: /path/to/libritts-dev-facodec-metadata.json
+    codes_path: /path/to/libritts-dev-facodec-codes
+
+  text_cleaners: ["english_cleaners"]
+  prompt_segment_ratio: 0.3
+  batch_size: 16
+  num_workers: 16
+  
+train:
+  epochs: 200
+  num_devices: 4
+  device: cuda
