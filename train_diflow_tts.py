@@ -44,7 +44,7 @@ def main():
     train_loader, val_loader = model.get_dataloader()
 
     checkpoint_callback = ModelCheckpoint(
-        monitor="loss/val",
+        monitor="Loss/Val",
         mode="min",
         save_top_k=1,
         filename="best-loss-val-{epoch:04d}",
