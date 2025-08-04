@@ -1,9 +1,11 @@
 <div align="center">
 
-<h1> DiFlow-TTS: Discrete Flow Matching with Factorized Speech Tokens for Low-Latency Zero-Shot Text-to-Speech </h1>
+<h1>DiFlow-TTS: Discrete Flow Matching with Factorized Speech Tokens for Low-Latency Zero-Shot Text-to-Speech</h1>
 
 [[Project Page]](https://diflow-tts.github.io/)
+
 ---
+
 </div>
 
 #### 🚩 Submitted to AAAI 2026
