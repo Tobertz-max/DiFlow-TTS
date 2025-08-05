@@ -52,7 +52,7 @@ root/
             └── ns3_facodec_decoder.bin
 
 ```
-- Download the DiFlow-TTS model checkpoint from [Link](https://drive.google.com/file/d/1K8E6I6Mc_ab9zhPbvKat1GRuvvygd3Ao/view?usp=sharing), and place it as follows:
+- Download the DiFlow-TTS model checkpoint from [Link](https://drive.google.com/file/d/1uV80fSVfmIWctnGR8KUbcZvtmBZZwJZM/view?usp=sharing), and place it as follows:
 ```
 root/
 └── ckpts/
